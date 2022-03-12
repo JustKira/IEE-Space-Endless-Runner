@@ -1,12 +1,3 @@
-
-from cmath import sin
-from genericpath import exists
-from hmac import trans_36
-from re import I
-from tkinter import Y
-from turtle import width
-from matplotlib.pyplot import draw
-from numpy import mat
 import pygame
 import neat
 import os
@@ -82,21 +73,21 @@ class Ally_Aircraft():
     def AIMovement(self, output):
         # if(self.transform.y > 0):
         index = ally_aircrafts.index(self)
-        if(output[0] <= 0.5):
-            self.transform.y -= 10 * output[1]
-        else:
-            #ge[index].fitness -= 10
-            pass
-            # if(self.transform.y < (WIN_HEIGHT - ALLY_AIRCRAFT.get_height())):
-        if(output[0] >= -0.5):
-            self.transform.y += 10 * output[1]
-        else:
-            #ge[index].fitness -= 10
-            pass
-
-        # if(output[0] == 0.0):
-        #     # efsh5 omo
-        #     ge[index].fitness -= 10
+        # if(output[0] <= 0.5):
+        #     self.transform.y -= 10 * output[1]
+        # else:
+        #     #ge[index].fitness -= 10
+        #     pass
+        #     # if(self.transform.y < (WIN_HEIGHT - ALLY_AIRCRAFT.get_height())):
+        # if(output[0] >= -0.5):
+        #     self.transform.y += 10 * output[1]
+        # else:
+        #     #ge[index].fitness -= 10
+        #     pass
+        self.transform.y += 7 * output[0]
+        if(output[0] == 0.0):
+            # efsh5 omo
+            ge[index].fitness -= 10
 
     def Shoot(self):
         pass
@@ -125,7 +116,7 @@ class Ally_Aircraft():
         x = int(self.transform.midleft[0])
         y = int(self.transform.midleft[1])
         try:
-            while not WIN.get_at((x, y)) == pygame.Color(34, 32, 52, 255) and length < 300:
+            while not WIN.get_at((x, y)) == pygame.Color(34, 32, 52, 255) and length < 500:
 
                 length += 1
                 x = int(
@@ -134,7 +125,7 @@ class Ally_Aircraft():
                     self.transform.midleft[1] - math.sin(math.radians(0 + radar_angle)) * length)
         except:
             pass
-        pygame.draw.line(WIN, (BLUE),
+        pygame.draw.line(WIN, (171, 203, 255),
                          self.transform.midleft, (x, y), 3)
         dist = int(math.sqrt(math.pow(self.transform.midleft[0] - x, 2)
                              + math.pow(self.transform.midleft[1] - y, 2)))
@@ -169,7 +160,7 @@ class Ally_Aircraft():
         if self.transform.colliderect(collider.transform):
 
             for g in ge:
-                g.fitness += 50
+                g.fitness += 300
             game_coins.pop(x)
 
 
@@ -218,7 +209,8 @@ class GameEntity():
     def Destroy(self, objects, x):
         if(self.transform.x < - self.img.get_width()):
             objects.pop(x)
-
+            for g in ge:
+                g.fitness += 20
     # def DestroyOnContact(self, collider, x):
     #     if self.transform.colliderect(collider.transform):
     #         ally_aircrafts.pop(x)
@@ -252,7 +244,7 @@ class Coin():
 
 class Gen():
 
-    gamespeed = 10
+    gamespeed = 5
 
     def __init__(self):
         self.gen_cooldown = COOLDOWN_TIME
@@ -352,7 +344,7 @@ def main(genomes, config):
             aircraft.Draw()
             aircraft.DebugDraw()
             _Inputs = [aircraft.transform.y]
-            for radar_angle in (-90, -60, -20, 0, 20, 60, 90):
+            for radar_angle in (-70, -30, -10, -2, 2, 10, 30, 70):
                 aircraft.Radar(radar_angle)
 
             ge[i].fitness += 3
