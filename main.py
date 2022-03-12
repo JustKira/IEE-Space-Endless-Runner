@@ -4,6 +4,7 @@ import os
 import random
 import math
 import pickle
+import visualize
 pygame.init()
 
 #---------------------------------------------------------------------------------------------------------------#
@@ -287,7 +288,7 @@ class Gen():
             spawnCoin = random.randint(0, 10)
             if spawnCoin < 3:
                 game_coins.append(Coin(COIN, random.randint(
-                    10, 200), random.randint(500, 500)))
+                    10, 200), random.randint(80, 500)))
 
         if len(rocks) != 0:
             for x, rock in enumerate(rocks):
@@ -401,14 +402,21 @@ def run(config_file):
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
-    # p.add_reporter(neat.Checkpointer(5))
+    p.add_reporter(neat.Checkpointer(5))
+
+    node_names = {-1: 'A', -2: 'B', 0: 'A XOR B'}
 
     # Run for up to 50 generations.
+    p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-4')
+    # 2**64
     winner = p.run(main, 2**64)
     with open("winner.pkl", "wb") as f:
         pickle.dump(winner, f)
         f.close()
     # show final stats
+    # visualize.draw_net(config, winner, True, node_names=node_names)
+    # visualize.plot_stats(stats, ylog=False, view=True)
+    # visualize.plot_species(stats, view=True)
     print('\nBest genome:\n{!s}'.format(winner))
 
 
