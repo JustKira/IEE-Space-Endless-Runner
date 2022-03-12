@@ -268,18 +268,18 @@ class Gen():
         # print(self.gen_cooldown)
 
         if self.gen_cooldown == 10:
-            self.gamespeed += 0.1
+            self.gamespeed += 0.5
             for i in range(ammount):
-                fcintime = random.randint(0, 10)
+                # fcintime = random.randint(0, 10)
 
-                if fcintime >= 7:
-                    rocks.append(GameEntity(ROCK001,
-                                            random.randint(10, 50), random.randint(40, 240)))
-                    rocks.append(GameEntity(ROCK001,
-                                            random.randint(10, 50), random.randint(720, 860)))
-                else:
-                    rocks.append(GameEntity(ROCK001,
-                                            random.randint(10, 50), random.randint(240, 720)))
+                # if fcintime >= 7:
+                #     rocks.append(GameEntity(ROCK001,
+                #                             random.randint(10, 50), random.randint(60, 240)))
+                #     rocks.append(GameEntity(ROCK001,
+                #                             random.randint(10, 50), random.randint(300, 600)))
+                # else:
+                rocks.append(GameEntity(ROCK001,
+                                        random.randint(10, 50), random.randint(60, 500)))
                 # if type == 2:
                 #     rocks.append(GameEntity(ROCK001,
                 #                             random.randint(10, 200), WIN_HEIGHT/2))
@@ -358,10 +358,11 @@ def main(genomes, config):
             #         _Inputs.extend([1000, 540])
 
             if len(game_coins) < 1:
-                _Inputs.extend([1000, 540])
+                _Inputs.extend([1000])
             else:
-                _Inputs.extend([game_coins[0].transform.x,
-                               game_coins[0].transform.y])
+                dist = int(math.sqrt(math.pow(aircraft.transform.midleft[0] - game_coins[0].transform.x, 2)
+                                     + math.pow(aircraft.transform.midleft[1] - game_coins[0].transform.y, 2)))
+                _Inputs.extend([dist])
 
             output = nets[ally_aircrafts.index(aircraft)].activate(
                 (_Inputs))
