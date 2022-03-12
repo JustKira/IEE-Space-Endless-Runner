@@ -187,7 +187,7 @@ class WorldLOWWER_EDGE():
 
     def __init__(self):
         self.transform = pygame.Rect(0,
-                                     EDGE.get_height(),
+                                     0,
                                      EDGE.get_width(),
                                      EDGE.get_height())
 
@@ -279,9 +279,9 @@ class Gen():
 
                 if fcintime >= 7:
                     rocks.append(GameEntity(ROCK001,
-                                            random.randint(10, 50), random.randint(20, 240)))
+                                            random.randint(10, 50), random.randint(40, 240)))
                     rocks.append(GameEntity(ROCK001,
-                                            random.randint(10, 50), random.randint(720, 900)))
+                                            random.randint(10, 50), random.randint(720, 860)))
                 else:
                     rocks.append(GameEntity(ROCK001,
                                             random.randint(10, 50), random.randint(240, 720)))
