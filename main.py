@@ -248,9 +248,10 @@ class Coin():
 class Gen():
 
     gamespeed = 5
+    timerspeedup = 0.001
 
     def __init__(self):
-        self.gen_cooldown = COOLDOWN_TIME
+        self.gen_cooldown = 1
 
     def speedup(self):
         self.gamespeed += 0.1
@@ -260,7 +261,7 @@ class Gen():
         if self.gen_cooldown < 0:
             self.gen_cooldown = COOLDOWN_TIME
         else:
-            self.gen_cooldown -= 1
+            self.gen_cooldown -= (1 - self.timerspeedup)
 
     def run(self):
 
@@ -269,8 +270,9 @@ class Gen():
         ammount = random.randint(0, 2)
         # print(self.gen_cooldown)
 
-        if self.gen_cooldown == 10:
+        if self.gen_cooldown <= 0:
             self.gamespeed += 0.5
+            self.timerspeedup += 0.001
             for i in range(ammount):
                 # fcintime = random.randint(0, 10)
 
@@ -403,13 +405,13 @@ def run(config_file):
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
-    p.add_reporter(neat.Checkpointer(5))
+    p.add_reporter(neat.Checkpointer(50))
 
     node_names = {-1: 'x_player', -2: 'dot_x', -3: 'θ_1', -
                   4: 'dot_θ_1', -5: 'θ_2', -6: 'dot_θ_2', 0: 'movment_rate'}
 
     # Run for up to 50 generations.
-    p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-4')
+    #p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-4')
     # 2**64
     winner = p.run(main, 2**64)
     with open("winner.pkl", "wb") as f:
