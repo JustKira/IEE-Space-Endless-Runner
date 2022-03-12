@@ -44,6 +44,7 @@ ROCK002 = pygame.transform.scale(
     ROCK002_IMG, (ROCK002_IMG.get_width() * 4, ROCK002_IMG.get_height() * 4))
 
 #---------------------------------------------------------------------------------------------------------------#
+
 FONT = pygame.font.Font('freesansbold.ttf', 20)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
