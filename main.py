@@ -350,7 +350,7 @@ def main(genomes, config):
             aircraft.Draw()
             aircraft.DebugDraw()
             _Inputs = [aircraft.transform.y]
-            for radar_angle in (-90, -30, 0, 30, 90):
+            for radar_angle in (-90, -20, 0, 20, 90):
                 aircraft.Radar(radar_angle)
 
             ge[i].fitness += 3
