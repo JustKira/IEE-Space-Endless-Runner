@@ -83,20 +83,20 @@ class Ally_Aircraft():
         # if(self.transform.y > 0):
         index = ally_aircrafts.index(self)
         if(output[0] <= 0.5):
-            self.transform.y -= 7
+            self.transform.y -= 10 * output[1]
         else:
             #ge[index].fitness -= 10
             pass
             # if(self.transform.y < (WIN_HEIGHT - ALLY_AIRCRAFT.get_height())):
         if(output[0] >= -0.5):
-            self.transform.y += 7
+            self.transform.y += 10 * output[1]
         else:
             #ge[index].fitness -= 10
             pass
 
-        if(output[0] == 0.0):
-            # efsh5 omo
-            ge[index].fitness -= 10
+        # if(output[0] == 0.0):
+        #     # efsh5 omo
+        #     ge[index].fitness -= 10
 
     def Shoot(self):
         pass
@@ -105,7 +105,8 @@ class Ally_Aircraft():
         WIN.blit(ALLY_AIRCRAFT, (self.transform.x, self.transform.y))
 
     def DebugDraw(self):
-        pygame.draw.rect(WIN, BLUE, self.transform, 2)
+        pass
+        #pygame.draw.rect(WIN, BLUE, self.transform, 2)
         # pygame.draw.line(WIN, RED, (self.transform.midright[0], self.transform.midright[1]),
         #                  (self.transform.midright[0] * 3, self.transform.midright[1] + math.sin(180) * 1), 3)
         # pygame.draw.line(WIN, RED, (self.transform.midright[0], self.transform.midright[1]),
@@ -121,21 +122,22 @@ class Ally_Aircraft():
 
     def Radar(self, radar_angle):
         length = 0
-        x = int(self.transform.center[0])
-        y = int(self.transform.center[1])
+        x = int(self.transform.midleft[0])
+        y = int(self.transform.midleft[1])
         try:
-            while not WIN.get_at((x, y)) == pygame.Color(34, 32, 52, 255) and length < 150:
+            while not WIN.get_at((x, y)) == pygame.Color(34, 32, 52, 255) and length < 300:
 
                 length += 1
                 x = int(
-                    self.transform.center[0] + math.cos(math.radians(0 + radar_angle)) * length)
+                    self.transform.midleft[0] + math.cos(math.radians(0 + radar_angle)) * length)
                 y = int(
-                    self.transform.center[1] - math.sin(math.radians(0 + radar_angle)) * length)
+                    self.transform.midleft[1] - math.sin(math.radians(0 + radar_angle)) * length)
         except:
             pass
-        pygame.draw.line(WIN, BLUE, self.transform.center, (x, y), 3)
-        dist = int(math.sqrt(math.pow(self.transform.center[0] - x, 2)
-                             + math.pow(self.transform.center[1] - y, 2)))
+        pygame.draw.line(WIN, (BLUE),
+                         self.transform.midleft, (x, y), 3)
+        dist = int(math.sqrt(math.pow(self.transform.midleft[0] - x, 2)
+                             + math.pow(self.transform.midleft[1] - y, 2)))
         # print(dist)
         # _Inputs.append(radar_angle)
         # _Inputs.append(dist)
@@ -256,7 +258,7 @@ class Gen():
         self.gen_cooldown = COOLDOWN_TIME
 
     def speedup(self):
-        self.gamespeed += 1
+        self.gamespeed += 0.1
 
     def cooldown(self):
 
@@ -273,7 +275,7 @@ class Gen():
         # print(self.gen_cooldown)
 
         if self.gen_cooldown == 10:
-
+            self.gamespeed += 0.1
             for i in range(ammount):
                 fcintime = random.randint(0, 10)
 
@@ -350,7 +352,7 @@ def main(genomes, config):
             aircraft.Draw()
             aircraft.DebugDraw()
             _Inputs = [aircraft.transform.y]
-            for radar_angle in (-90, -20, 0, 20, 90):
+            for radar_angle in (-90, -60, -20, 0, 20, 60, 90):
                 aircraft.Radar(radar_angle)
 
             ge[i].fitness += 3
