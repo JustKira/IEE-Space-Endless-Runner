@@ -279,7 +279,7 @@ class Gen():
                 #                             random.randint(10, 50), random.randint(300, 600)))
                 # else:
                 rocks.append(GameEntity(ROCK001,
-                                        random.randint(10, 50), random.randint(60, 500)))
+                                        random.randint(10, 50), random.randint(80, 500)))
                 # if type == 2:
                 #     rocks.append(GameEntity(ROCK001,
                 #                             random.randint(10, 200), WIN_HEIGHT/2))
@@ -287,7 +287,7 @@ class Gen():
             spawnCoin = random.randint(0, 10)
             if spawnCoin < 3:
                 game_coins.append(Coin(COIN, random.randint(
-                    10, 200), random.randint(60, 500)))
+                    10, 200), random.randint(500, 500)))
 
         if len(rocks) != 0:
             for x, rock in enumerate(rocks):
@@ -299,7 +299,7 @@ class Gen():
             for x, coin in enumerate(game_coins):
                 if coin in game_coins:
                     coin.Destroy(coin)
-                    coin.Move(self.gamespeed)
+                    coin.Move(self.gamespeed * 3/4)
                     coin.Draw()
                     coin.DebugDraw()
 
