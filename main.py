@@ -287,7 +287,7 @@ class Gen():
             spawnCoin = random.randint(0, 10)
             if spawnCoin < 3:
                 game_coins.append(Coin(COIN, random.randint(
-                    10, 200), random.randint(20, 860)))
+                    10, 200), random.randint(60, 500)))
 
         if len(rocks) != 0:
             for x, rock in enumerate(rocks):
